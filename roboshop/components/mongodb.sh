@@ -10,7 +10,7 @@ fi
     
 }
 Print(){
-    echo -n -e "$1 \t -"
+    echo -n -e "$1 \t - "
 }
 Print "Setting Up MongoDB Repo\t\t"
 
