@@ -12,7 +12,7 @@ fi
 Print(){
     echo -n -e "$1 \t -"
 }
-Print "Setting Up MongoDB Repo"
+Print "Setting Up MongoDB Repo\t"
 
 echo '[mongodb-org-4.2]
 name=MongoDB Repository
@@ -29,17 +29,17 @@ Print "Updating mongod.conf with global "
 sed -i -e 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf
 Status_Check $?
 
-Print "Starting MongoDB\t\t\t" 
+Print "Starting MongoDB\t\t" 
 systemctl enable mongod
 systemctl restart mongod
 Status_Check $?
 
-Print "Downloading MongoDB\t\t\t"
+Print "Downloading MongoDB\t\t"
 curl -s -L -o /tmp/mongodb.zip "https://github.com/roboshop-devops-project/mongodb/archive/main.zip"
 Status_Check $?
 
 cd /tmp
-Print "Downloading MongoDB schema"
+Print "Downloading MongoDB schema\t"
 unzip -o mongodb.zip &>>/tmp/log
 Status_Check $?
 cd mongodb-main
