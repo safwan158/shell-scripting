@@ -10,7 +10,7 @@ fi
     
 }
 Print(){
-    echo -n -e "$1\t\t"
+    echo -n -e "$1 \t-"
 }
 Print "Setting Up MongoDB Repo"
 
@@ -25,7 +25,7 @@ Print "Installing MongoDB"
 yum install -y mongodb-org &>>/tmp/log
 Status_Check $?
 
-Print "Updating mongod.conf with global ip"
+Print "Updating mongod.conf with global "
 sed -i -e 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf
 Status_Check $?
 
