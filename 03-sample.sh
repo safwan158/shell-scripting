@@ -18,9 +18,3 @@ else
     echo failure
 fi
 
-read -p 'Enter filename: ' file
-if [ -f $file ]; then 
-    echo "Filename exists"
-else 
-    echo "File doesnot exist"
-fi
