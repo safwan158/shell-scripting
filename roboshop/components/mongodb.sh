@@ -12,7 +12,7 @@ fi
 Print(){
     echo -n -e "$1 \t -"
 }
-Print "Setting Up MongoDB Repo\t"
+Print "Setting Up MongoDB Repo\t\t"
 
 echo '[mongodb-org-4.2]
 name=MongoDB Repository
