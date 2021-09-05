@@ -16,6 +16,7 @@ fi
 
 echo "Installing MongoDB"
 yum install -y mongodb-org &>>/tmp/log
+
 if [ $? -eq 0 ]; then
     echo -e "\e[32mSUCCESS\e[0m"
 else
@@ -37,6 +38,7 @@ if [ $? -eq 0 ]; then
 else
     echo -e "\e[31mFAILURE\e[0m"
 fi
+
 echo "Downloading MongoDB"
 curl -s -L -o /tmp/mongodb.zip "https://github.com/roboshop-devops-project/mongodb/archive/main.zip"
 if [ $? -eq 0 ]; then
@@ -48,13 +50,14 @@ fi
 cd /tmp
 echo "Downloading MongoDB schema"
 unzip -o mongodb.zip &>>/tmp/log
-cd mongodb-main
-echo "Loading Schema"
+
 if [ $? -eq 0 ]; then
     echo -e "\e[32mSUCCESS\e[0m"
 else
     echo -e "\e[31mFAILURE\e[0m"
 fi
+cd mongodb-main
+echo "Loading Schema"
 mongo < catalogue.js &>>/tmp/log
 mongo < users.js &>>/tmp/log
 if [ $? -eq 0 ]; then
