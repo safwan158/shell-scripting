@@ -12,6 +12,7 @@ if [ $? -eq 0 ]; then
     echo -e "\e[32mSUCCESS\e[0m"
 else
     echo -e "\e[31mFAILURE\e[0m"
+    exit 2
 fi    
 
 echo "Installing MongoDB"
@@ -21,6 +22,7 @@ if [ $? -eq 0 ]; then
     echo -e "\e[32mSUCCESS\e[0m"
 else
     echo -e "\e[31mFAILURE\e[0m"
+    exit 2
 fi
 echo "Updating mongod.conf with global ip"
 sed -i -e 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf
@@ -28,6 +30,7 @@ if [ $? -eq 0 ]; then
     echo -e "\e[32mSUCCESS\e[0m"
 else
     echo -e "\e[31mFAILURE\e[0m"
+    exit 2
 fi
 
 echo "Starting MongoDB" 
@@ -37,6 +40,7 @@ if [ $? -eq 0 ]; then
     echo -e "\e[32mSUCCESS\e[0m"
 else
     echo -e "\e[31mFAILURE\e[0m"
+    exit 2
 fi
 
 echo "Downloading MongoDB"
@@ -45,16 +49,18 @@ if [ $? -eq 0 ]; then
     echo -e "\e[32mSUCCESS\e[0m"
 else
     echo -e "\e[31mFAILURE\e[0m"
+    exit 2
 fi
 
 cd /tmp
 echo "Downloading MongoDB schema"
-unzip -o mongodb.zip &>>/tmp/log
+unzipp -o mongodb.zip &>>/tmp/log
 
 if [ $? -eq 0 ]; then
     echo -e "\e[32mSUCCESS\e[0m"
 else
     echo -e "\e[31mFAILURE\e[0m"
+    exit 2
 fi
 cd mongodb-main
 echo "Loading Schema"
@@ -64,5 +70,7 @@ if [ $? -eq 0 ]; then
     echo -e "\e[32mSUCCESS\e[0m"
 else
     echo -e "\e[31mFAILURE\e[0m"
+    exit 2
 fi
 
+exit 0
