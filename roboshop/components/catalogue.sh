@@ -22,11 +22,15 @@ Status_Check $?
 Print "Extracting Catalogue"
 cd /home/roboshop
 unzip /tmp/catalogue.zip &>>$LOG
+mv catalogue-main catalogue
 Status_Check $?
 
-mv catalogue-main catalogue
+Print "Downloading NodeJS Dependencies"
 cd /home/roboshop/catalogue
 npm install --unsafe-perm &>>$LOG
+Status_Check $?
+
+chown roboshop:roboshop -R /home/roboshop
 #We need to update the IP address of MONGODB Server in systemd.service file
 #Now, lets set up the service with systemctl.
 
