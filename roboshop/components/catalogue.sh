@@ -20,7 +20,7 @@ curl -s -L -o /tmp/catalogue.zip "https://github.com/roboshop-devops-project/cat
 Status_Check $?
 
 Print "Extracting Catalogue"
-$cd /home/roboshop
+cd /home/roboshop
 unzip /tmp/catalogue.zip &>>$LOG
 Status_Check $?
 
