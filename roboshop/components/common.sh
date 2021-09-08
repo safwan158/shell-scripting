@@ -16,3 +16,6 @@ if [ $UID -ne 0 ]; then
     echo -e "\n\e[1;33mYou Should execute this script as a root user\e[0m\n"
     exit 1
 fi
+
+LOG=/tmp/roboshop.log
+rm -f $LOG

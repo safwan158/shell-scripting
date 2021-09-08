@@ -11,7 +11,7 @@ enabled=1
 gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mongodb.repo
 Status_Check $?
 Print "Installing MongoDB\t\t"
-yum install -y mongodb-org &>>/tmp/log
+yum install -y mongodb-org &>>$LOG
 Status_Check $?
 
 Print "Updating mongod.conf with global "
@@ -29,12 +29,12 @@ Status_Check $?
 
 cd /tmp
 Print "Downloading MongoDB schema\t"
-unzip -o mongodb.zip &>>/tmp/log
+unzip -o mongodb.zip &>>$LOG
 Status_Check $?
 cd mongodb-main
 Print "Loading Schema\t\t\t"
-mongo < catalogue.js &>>/tmp/log
-mongo < users.js &>>/tmp/log
+mongo < catalogue.js &>>$LOG
+mongo < users.js &>>$LOG
 Status_Check $?
 
 exit 0
