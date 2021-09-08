@@ -33,7 +33,6 @@ chown roboshop:roboshop -R /home/roboshop
 #We need to update the IP address of MONGODB Server in systemd.service file
 #Now, lets set up the service with systemctl.
 Print "SetUp SystemD Service"
-mv /home/roboshop/catalogue/systemd.service /etc/systemd/system/catalogue.service && systemctl daemon-reload &&
-
-systemctl start catalogue
-systemctl enable catalogue
+mv /home/roboshop/catalogue/systemd.service /etc/systemd/system/catalogue.service && systemctl daemon-reload && systemctl start catalogue &>>$LOG 
+systemctl enable catalogue &>>$LOG
+Status_Check $?
