@@ -33,7 +33,7 @@ chown roboshop:roboshop -R /home/roboshop
 #We need to update the IP address of MONGODB Server in systemd.service file
 #Now, lets set up the service with systemctl.
 Print "Update SystemD Service\t\t"
-sed -i -e 's/MONGO_DNSNAME/mongodb.roboshop.internal' /home/roboshop/catalogue/systemd.service
+sed -i -e 's/MONGO_DNSNAME/mongodb.roboshop.internal/' /home/roboshop/catalogue/systemd.service
 Status_Check $?
 
 Print "SetUp SystemD Service"
