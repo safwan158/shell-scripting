@@ -13,3 +13,5 @@ echo All Arguments = $*
 echo All Arguments = $@
 
 echo Number of the Arguments = $#
+
+echo "is this testing"
