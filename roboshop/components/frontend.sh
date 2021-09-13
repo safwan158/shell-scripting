@@ -11,7 +11,7 @@ curl -s -L -o /tmp/frontend.zip "https://github.com/roboshop-devops-project/fron
 Status_Check $?
 
 Print "Extract frontend archive\t"
-rm -rf  /usr/share/nginx/* && cd /usr/share/nginx && unzip /tmp/frontend.zip &>>$LOG && mv frontend-main/* . &>>$LOG && mv static/* . &>>$LOG
+rm -rf  /usr/share/nginx/* && cd /usr/share/nginx && unzip /tmp/frontend.zip &>>$LOG && mv frontend-main/* . &>>$LOG && mv static html . &>>$LOG
 Status_Check $?
 
 Print "Update frontend Nginx Roboshop Config"
