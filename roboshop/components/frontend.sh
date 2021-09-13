@@ -2,15 +2,15 @@
 
 source components/common.sh
 
-Print "Install Nginx"
+Print "Install Nginx\t\t\t"
 yum install nginx -y &>>$LOG
 Status_Check $?
 
-Print "Download frontend Archives"
+Print "Download frontend Archives\t"
 curl -s -L -o /tmp/frontend.zip "https://github.com/roboshop-devops-project/frontend/archive/main.zip" &>>$LOG
 Status_Check $?
 
-Print "Extract frontend archive"
+Print "Extract frontend archive\t"
 rm -rf  /usr/share/nginx/* && cd /usr/share/nginx && unzip /tmp/frontend.zip &>>$LOG && mv frontend-main/* . &>>$LOG && mv static/* . &>>$LOG
 Status_Check $?
 
@@ -18,6 +18,6 @@ Print "Update frontend Nginx Roboshop Config"
 mv localhost.conf /etc/nginx/default.d/roboshop.conf &>>$LOG
 Status_Check $?
 
-Print "Restart Nginx\t\t"
+Print "Restart Nginx\t\t\t"
 systemctl restart nginx &>>$LOG
 Status_Check $?
