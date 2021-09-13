@@ -20,3 +20,48 @@ fi
 
 LOG=/tmp/roboshop.log
 rm -f $LOG
+
+ADD_APP_USER() {
+    Print "Adding RoboShop User\t\t"
+    id roboshop &>>$LOG
+        if [ $? -eq -0 ]; then
+    echo "User already there, so skipping " &>>$LOG
+        else
+    useradd roboshop &>>$LOG
+    fi
+    Status_Check $?
+}
+
+DOWNLOAD() {
+    Print "Downloading ${COMPONENT} Content\t"
+    curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/roboshop-devops-project/${COMPONENT}/archive/main.zip" &>>$LOG
+    Status_Check $?
+    Print "Extracting ${COMPONENT}\t\t"
+    cd /home/roboshop
+    rm -rf ${COMPONENT} && unzip -o /tmp/${COMPONENT}.zip &>>$LOG && mv ${COMPONENT}-main ${COMPONENT}
+    Status_Check $?
+}
+SystemD-Setup() {
+    Print "Update SystemD Service\t\t"
+    sed -i -e 's/MONGO_DNSNAME/mongodb.roboshop.internal/' /home/roboshop/${COMPONENT}/systemd.service
+    Status_Check $?
+    
+    Print "SetUp SystemD Service\t\t"
+    mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service && systemctl daemon-reload && systemctl restart ${COMPONENT} &>>$LOG 
+    systemctl enable ${COMPONENT} &>>$LOG
+    Status_Check $?
+}
+NODEJS() {
+    Print "Installing NodeJS\t\t"
+    yum install nodejs make gcc-c++ -y &>>$LOG
+    Status_Check $?
+
+    ADD_APP_USER
+    DOWNLOAD
+    Print "Downloading NodeJS Dependencies"
+    cd /home/roboshop/${COMPONENT}
+    npm install --unsafe-perm &>>$LOG
+    Status_Check $?
+    chown roboshop:roboshop -R /home/roboshop
+    SystemD-Setup
+}
