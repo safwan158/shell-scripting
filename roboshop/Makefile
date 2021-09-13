@@ -10,6 +10,9 @@ mongodb:	## Installing MongoDB
 redis:   	## Installing Redis
 	@bash components/redis.sh
 
+frontend:	## Installing FrontEnd
+	@bash components/frontend.sh
+
 user:		## Installing User
 	@bash components/user.sh
 	
@@ -28,5 +31,3 @@ rabbitmq:	## Installing RabbitMQ
 payment:	## Installing Payment
 	@bash components/payment.sh
 	
-frontend:	## Installing FrontEnd
-	@bash components/frontend.sh
