@@ -36,18 +36,19 @@ DOWNLOAD() {
     Print "Downloading ${COMPONENT} Content\t"
     curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/roboshop-devops-project/${COMPONENT}/archive/main.zip" &>>$LOG
     Status_Check $?
-    Print "Extracting ${COMPONENT}\t\t\t"
+    Print "Extracting ${COMPONENT}\t\t\t\t"
     cd /home/roboshop
     rm -rf ${COMPONENT} && unzip -o /tmp/${COMPONENT}.zip &>>$LOG && mv ${COMPONENT}-main ${COMPONENT}
     Status_Check $?
 }
 SystemD-Setup() {
     Print "Update SystemD Service\t\t"
-    sed -i -e 's/MONGO_DNSNAME/mongodb.roboshop.internal/' /home/roboshop/${COMPONENT}/systemd.service
+    sed -i -e 's/MONGO_DNSNAME/mongodb.roboshop.internal/' -e '/s/REDIS_ENDPOINT/redis.roboshop.internal/' -e '/s/MONGO_ENDPOINT/mongodb.roboshop.internal' /home/roboshop/${COMPONENT}/systemd.service
     Status_Check $?
     
     Print "SetUp SystemD Service\t\t"
-    mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service && systemctl daemon-reload && systemctl restart ${COMPONENT} &>>$LOG systemctl enable ${COMPONENT} &>>$LOG
+    
+    mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service && systemctl daemon-reload && systemctl restart ${COMPONENT} &>>$LOG && systemctl enable ${COMPONENT} &>>$LOG
     Status_Check $?
 }
 NODEJS() {
