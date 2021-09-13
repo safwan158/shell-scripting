@@ -15,9 +15,15 @@ rm -rf /usr/share/nginx/* && cd /usr/share/nginx && unzip -o /tmp/frontend.zip  
 #rm -rf /usr/share/nginx/* && cd /usr/share/nginx && unzip -o /tmp/frontend.zip  &>>$LOG  && mv frontend-main/* .  &>>$LOG  &&   mv static html .&>>$LOG
 Status_Check $?
 
-Print "Update frontend Nginx Roboshop Config"
+Print "copy frontend Nginx Roboshop Config"
 mv localhost.conf /etc/nginx/default.d/roboshop.conf &>>$LOG
 Status_Check $?
+
+Print "update frontend Nginx Roboshop Config"
+sed -i -e '/catalogue/ s/localhost/catalogue.roboshop.internal/' /etc/nginx/default.d/roboshop.conf >>&$LOG
+mv localhost.conf /etc/nginx/default.d/roboshop.conf &>>$LOG
+Status_Check $?
+
 
 Print "Restart Nginx\t\t\t"
 systemctl restart nginx &>>$LOG
