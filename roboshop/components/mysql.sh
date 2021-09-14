@@ -15,14 +15,11 @@ yum remove mariadb-libs -y &>>$LOG && yum install mysql-community-server -y &>>$
 Status_Check $?
 
 Print "Start MySQL Service"
-systemctl enable mysqld &>>$LOG && systemctl start mysqld &>>$LOG
-Status_Check $?
-exit
+systemctl enable mysqld && systemctl start mysqld &>>$LOG
 
 DEFAULT_PASSWORD=$(grep 'A temporary password' /var/log/mysqld.log | awk '{print $NF}')
-
-echo "ALTER USER 'root'@'localhost' IDENTIFIED BY 'RoboShop@1'"; >/tmp/reset.sql
-mysql -u root -p "${DEFAULT_PASSWORD}" < /tmp/reset.sql
+echo "ALTER USER 'root'@'localhost' IDENTIFIED BY 'RoboShop@1'";  > /tmp/reset.sql
+mysql --connect-expired-password -u root -p "${DEFAULT_PASSWORD}" < /tmp/reset.sql
 exit
 
  uninstall plugin validate_password;
