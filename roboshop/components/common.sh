@@ -43,7 +43,7 @@ DOWNLOAD() {
 }
 SystemD-Setup() {
     Print "Update SystemD Service\t\t"
-    sed -i -e 's/MONGO_DNSNAME/mongodb.roboshop.internal/' -e 's/REDIS_ENDPOINT/redis.roboshop.internal/' -e  's/MONGO_ENDPOINT/mongodb.roboshop.internal/' -e 's/CATALOGUE_ENDPOINT/catalogue.roboshop.internal/' /home/roboshop/${COMPONENT}/systemd.service
+    sed -i -e 's/MONGO_DNSNAME/mongodb.roboshop.internal/' -e 's/REDIS_ENDPOINT/redis.roboshop.internal/' -e  's/MONGO_ENDPOINT/mongodb.roboshop.internal/' -e 's/CATALOGUE_ENDPOINT/catalogue.roboshop.internal/' -e 's/CARTENDPOINT/cart.roboshop.internal/' -e 's/DBHOST/mysql.roboshop.internal/'  /home/roboshop/${COMPONENT}/systemd.service
     Status_Check $?
     
     Print "SetUp SystemD Service\t\t"
@@ -68,19 +68,20 @@ NODEJS() {
     
     JAVA(){
         
-    Print "Installing Maven"
+    Print "Installing Maven\t\t"
     yum install maven -y &>>$LOG
     Status_Check $?
     
     ADD_APP_USER
     DOWNLOAD
     cd /home/roboshop/shipping
-    Print "Make Shipping Package"
+    Print "Make Shipping Package\t\t"
     mvn clean package &>>$LOG
     Status_Check $?
-    Print "Rename shipping package"
+    Print "Rename shipping package\t"
     mv target/shipping-1.0.jar shipping.jar &>>$LOG
     Status_Check $?
     chown roboshop:roboshop -R /home/roboshop
+    SystemD-Setup
     
 }
