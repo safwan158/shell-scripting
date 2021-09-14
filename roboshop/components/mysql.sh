@@ -21,16 +21,7 @@ Status_Check $?
 DEFAULT_PASSWORD=$(grep 'A temporary password' /var/log/mysqld.log | awk '{print $NF}')
 
 
-#Print "Reseting Default Password"
-#echo 'show databases' | mysql -uroot -pRoboshop@1 &>>$LOG
-#if [ $? -eq 0 ]; then
-#echo "Root Password is already set" &>>$LOG
-#else
- #   echo "ALTER USER 'root'@'localhost' IDENTIFIED BY 'RoboShop@1';" >/tmp/reset.sql
-  #  mysql --connect-expired-password -u root -p"${DEFAULT_PASSWORD}" </tmp/reset.sql &>>$LOG
-#fi
-#Status_Check $?
-Print "Reset Default Password\t\t"
+Print "Reset Default Password\t"
 echo 'show databases' | mysql -uroot -pRoboShop@1 &>>$LOG
 if [ $? -eq 0 ]; then
   echo "Root Password is already set" &>>$LOG
@@ -40,21 +31,18 @@ else
 fi
 Status_Check $?
 
-exit
+Print "Uninstall Password validate plugin"
+ echo "uninstall plugin validate_password;" >/tmp/pass.sql
+ mysql -u root -p"RoboShop@1"  </tmp/pass.sql &>>$LOG
+Status_Check $?
 
- uninstall plugin validate_password;
-Setup Needed for Application.
-As per the architecture diagram, MySQL is needed by
+Print "Downloading the Schema"
+curl -s -L -o /tmp/mysql.zip "https://github.com/roboshop-devops-project/mysql/archive/main.zip" &>>$LOG
 
-Shipping Service
-So we need to load that schema into the database, So those applications will detect them and run accordingly.
+Print "Extract Schema File"
+cd /tmp && unzip -o mysql.zip &>>$LOG
+Status_Check $?
 
-To download schema, Use the following command
-
-# curl -s -L -o /tmp/mysql.zip "https://github.com/roboshop-devops-project/mysql/archive/main.zip"
-Load the schema for Services.
-
-# cd /tmp
-# unzip mysql.zip
-# cd mysql-main
-# mysql -u root -pRoboShop@1 <shipping.sql
+Print "Load Schema"
+cd mysql-main && mysql -u root -pRoboShop@1 <shipping.sql &>>$LOG
+Status_Check $?
