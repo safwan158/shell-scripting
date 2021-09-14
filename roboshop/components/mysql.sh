@@ -2,7 +2,7 @@
 
 source components/common.sh
 
-Print "Setup MySQL Repo\t"
+Print "Setup MySQL Repo\t\t"
 echo '[mysql57-community]
 name=MySQL 5.7 Community Server
 baseurl=http://repo.mysql.com/yum/mysql-5.7-community/el/7/$basearch/
@@ -10,18 +10,18 @@ enabled=1
 gpgcheck=0' > /etc/yum.repos.d/mysql.repo
 Status_Check $?
 
-Print "Install MySQL\t\t"
+Print "Install MySQL\t\t\t"
 yum remove mariadb-libs -y &>>$LOG && yum install mysql-community-server -y &>>$LOG
 Status_Check $?
 
-Print "Start MySQL Service\t"
+Print "Start MySQL Service\t\t"
 systemctl enable mysqld && systemctl start mysqld &>>$LOG
 Status_Check $?
 
 DEFAULT_PASSWORD=$(grep 'A temporary password' /var/log/mysqld.log | awk '{print $NF}')
 
 
-Print "Reset Default Password\t"
+Print "Reset Default Password\t\t"
 echo 'show databases' | mysql -uroot -pRoboShop@1 &>>$LOG
 if [ $? -eq 0 ]; then
   echo "Root Password is already set" &>>$LOG
@@ -41,14 +41,14 @@ Print "Uninstall Password validate plugin"
 fi
  Status_Check $?
 
-Print "Downloading the Schema\t"
+Print "Downloading the Schema\t\t"
 curl -s -L -o /tmp/mysql.zip "https://github.com/roboshop-devops-project/mysql/archive/main.zip" &>>$LOG
 Status_Check $?
 
-Print "Extract Schema File\t"
+Print "Extract Schema File\t\t"
 cd /tmp && unzip -o mysql.zip &>>$LOG
 Status_Check $?
 
-Print "Load Schema\t\t"
+Print "Load Schema\t\t\t"
 cd mysql-main && mysql -u root -pRoboShop@1 <shipping.sql &>>$LOG
 Status_Check $?
