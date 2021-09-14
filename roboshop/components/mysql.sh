@@ -20,15 +20,26 @@ Status_Check $?
 
 DEFAULT_PASSWORD=$(grep 'A temporary password' /var/log/mysqld.log | awk '{print $NF}')
 
-Print "Reseting Default Password"
-echo 'show databases' | mysql -uroot -pRoboshop@1 &>>$LOG
+
+#Print "Reseting Default Password"
+#echo 'show databases' | mysql -uroot -pRoboshop@1 &>>$LOG
+#if [ $? -eq 0 ]; then
+#echo "Root Password is already set" &>>$LOG
+#else
+ #   echo "ALTER USER 'root'@'localhost' IDENTIFIED BY 'RoboShop@1';" >/tmp/reset.sql
+  #  mysql --connect-expired-password -u root -p"${DEFAULT_PASSWORD}" </tmp/reset.sql &>>$LOG
+#fi
+#Status_Check $?
+Print "Reset Default Password\t\t"
+echo 'show databases' | mysql -uroot -pRoboShop@1 &>>$LOG
 if [ $? -eq 0 ]; then
-echo "Root Password is already set"
+  echo "Root Password is already set" &>>$LOG
 else
-    echo "ALTER USER 'root'@'localhost' IDENTIFIED BY 'RoboShop@1';" >/tmp/reset.sql
-    mysql --connect-expired-password -u root -p"${DEFAULT_PASSWORD}" </tmp/reset.sql &>>$LOG
+  echo "ALTER USER 'root'@'localhost' IDENTIFIED BY 'RoboShop@1';" >/tmp/reset.sql
+  mysql --connect-expired-password -u root -p"${DEFAULT_PASSWORD}" </tmp/reset.sql &>>$LOG
 fi
 Status_Check $?
+
 exit
 
  uninstall plugin validate_password;
