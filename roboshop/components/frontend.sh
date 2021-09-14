@@ -21,11 +21,11 @@ Status_Check $?
 
 Print "update frontend Nginx Roboshop Config"
 #sed -i -e '/catalogue/ s/localhost/catalogue.roboshop.internal/' /etc/nginx/default.d/roboshop.conf &>>$LOG
-sed -i -e '/catalogue/ s/localhost/catalogue.roboshop.internal/' -e '/user/ s/localhost/user.roboshop.internal/' -e '/cart/ s/localhost/cart.roboshop.internal/' -e '/shipping/ s/localhost/shipping.roboshop.internal/' -e '/payment/ s/localhost/payment.roboshop.internal/' /etc/nginx/default.d/roboshop.conf  &>>$LOG
+sed -i -e '/catalogue/ s/localhost/catalogue.roboshop.internal/' -e '/user/ s/localhost/user.roboshop.internal/' -e '/cart/ s/localhost/cart.roboshop.internal/'  /etc/nginx/default.d/roboshop.conf  &>>$LOG
 Status_Check $?
 
 Print "Restart Nginx\t\t"
-systemctl start nginx  &>>$LOG  && systemctl enable nginx &>>$LOG
+systemctl restart nginx  &>>$LOG  && systemctl enable nginx &>>$LOG
 Status_Check $?
 
 
