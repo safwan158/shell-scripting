@@ -32,9 +32,14 @@ fi
 Status_Check $?
 
 Print "Uninstall Password validate plugin"
- echo "uninstall plugin validate_password;" >/tmp/pass.sql
+ echo 'show plugins;' | mysql -u root -p"RoboShop@1" | grep -i validate_password &>>$LOG
+ if [ $? -eq 0 ]; then 
+ echo "uninstall plugin validate_password;" >/tmp/pass.sql&>>$LOG
  mysql -u root -p"RoboShop@1"  </tmp/pass.sql &>>$LOG
-Status_Check $?
+ else
+ echo "Uninstall plug is already there" &>>$LOG
+fi
+ Status_Check $?
 
 Print "Downloading the Schema"
 curl -s -L -o /tmp/mysql.zip "https://github.com/roboshop-devops-project/mysql/archive/main.zip" &>>$LOG
