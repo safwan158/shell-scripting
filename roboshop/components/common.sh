@@ -65,3 +65,22 @@ NODEJS() {
     chown roboshop:roboshop -R /home/roboshop
     SystemD-Setup
 }
+    
+    JAVA(){
+        
+    Print "Installing Maven"
+    yum install maven -y &>>$LOG
+    Status_Check $?
+    
+    ADD_APP_USER
+    DOWNLOAD
+    cd /home/roboshop/shipping
+    Print "Make Shipping Package"
+    mvn clean package &>>$LOG
+    Status_Check $?
+    Print "Rename shipping package"
+    mv target/shipping-1.0.jar shipping.jar &>>$LOG
+    Status_Check $?
+    chown roboshop:roboshop -R /home/roboshop
+    
+}
