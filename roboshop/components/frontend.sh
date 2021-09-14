@@ -29,10 +29,3 @@ systemctl restart nginx  &>>$LOG  && systemctl enable nginx   &>>$LOG
 Status_Check $?
 
 
-mv localhost.conf /etc/nginx/default.d/roboshop.conf &>>$LOG
-Status_Check $?
-
-
-Print "Restart Nginx\t\t\t"
-systemctl restart nginx &>>$LOG
-Status_Check $?
