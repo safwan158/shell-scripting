@@ -41,11 +41,11 @@ Print "Uninstall Password validate plugin"
 fi
  Status_Check $?
 
-Print "Downloading the Schema"
+Print "Downloading the Schema\t"
 curl -s -L -o /tmp/mysql.zip "https://github.com/roboshop-devops-project/mysql/archive/main.zip" &>>$LOG
 Status_Check $?
 
-Print "Extract Schema File"
+Print "Extract Schema File\t"
 cd /tmp && unzip -o mysql.zip &>>$LOG
 Status_Check $?
 
