@@ -101,7 +101,7 @@ Status_Check $?
 
 Print "Update Roboshop User in Config"
  USERID=$(id -u roboshop)
- GROUPID=$(is -g roboshop)
+ GROUPID=$(id -g roboshop)
  sed -i -e "/uid/ c uid=${USERID}" -e "/gid/ c gid =${GROUPID}" //home/roboshop/payment/payment.ini &>>$LOG
  Status_Check $?
 }
