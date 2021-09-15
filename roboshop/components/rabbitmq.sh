@@ -2,7 +2,7 @@
 
 source components/common.sh
 
-Print "Install Erlang\t"
+Print "Install Erlang\t\t"
 yum list installed | grep erlang &>>$LOG
 if [ $? -eq 0 ]; then 
     echo "Package is already Installed" &>>$LOG
@@ -11,20 +11,20 @@ else
 fi
 Status_Check $?
 
-Print "Setup YUM repositories"
+Print "Setup YUM repositories\t"
 curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | sudo bash &>>$LOG
 Status_Check $?
 
-Print "Install RabbitMQ"
+Print "Install RabbitMQ\t"
 yum install rabbitmq-server -y &>>$LOG
 Status_Check $?
 
-Print "Start RabbitMQ\t"
+Print "Start RabbitMQ\t\t"
 systemctl enable rabbitmq-server &>>$LOG &&  systemctl start rabbitmq-server &>>$LOG
 Status_Check $?
 
 Print "Create an application User"
-rabbitmqctl list_users | grep roboshop
+rabbitmqctl list_users | grep roboshop &>>$LOG
 if [ $? -ne 0 ]; then
     rabbitmqctl add_user roboshop roboshop123 &>>$LOG
 else 
