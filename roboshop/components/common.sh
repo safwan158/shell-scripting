@@ -84,5 +84,25 @@ NODEJS() {
     Status_Check $?
     chown roboshop:roboshop -R /home/roboshop
     SystemD-Setup
+}
+
+PYTHON(){
+Print "Install Python 3"
+yum install python36 gcc python3-devel -y &>>$LOG
+Status_Check $?
+
+ADD_APP_USER
+DOWNLOAD
+
+cd /home/roboshop/payment
+Print "Install Dependencies"
+pip3 install -r requirements.txt &>>$LOG
+Status_Check $?
+
+
+
+    
+    
+    
     
 }
