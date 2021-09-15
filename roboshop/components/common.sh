@@ -87,7 +87,7 @@ NODEJS() {
 }
 
 PYTHON(){
-Print "Install Python 3"
+Print "Install Python 3\t\t"
 yum install python36 gcc python3-devel -y &>>$LOG
 Status_Check $?
 
@@ -95,14 +95,8 @@ ADD_APP_USER
 DOWNLOAD
 
 cd /home/roboshop/payment
-Print "Install Dependencies"
+Print "Install Python Dependencies\t"
 pip3 install -r requirements.txt &>>$LOG
 Status_Check $?
 
-
-
-    
-    
-    
-    
 }
