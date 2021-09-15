@@ -78,7 +78,7 @@ NODEJS() {
     Print "Make Shipping Package\t\t"
     mvn clean package &>>$LOG
     Status_Check $?
-    Print "Rename shipping package\t"
+    Print "Rename shipping package\t\t"
     mv target/shipping-1.0.jar shipping.jar &>>$LOG
     Status_Check $?
     chown roboshop:roboshop -R /home/roboshop
