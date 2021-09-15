@@ -99,9 +99,12 @@ Print "Install Python Dependencies\t"
 pip3 install -r requirements.txt &>>$LOG
 Status_Check $?
 
-Print "Update Roboshop User in Config"
+Print "Update Roboshop User in Config\t"
  USERID=$(id -u roboshop)
  GROUPID=$(id -g roboshop)
  sed -i -e "/uid/ c uid=${USERID}" -e "/gid/ c gid =${GROUPID}" //home/roboshop/payment/payment.ini &>>$LOG
  Status_Check $?
+ 
+ SystemD-Setup
+ 
 }
